@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>eShop</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+
+</head>
+
+<body>
+	<div id="root">
+		<header>
+			<h1 class="cats" @click="visiblCardCat">Котики лучше всех</h1>
+		</header>
+		<main>
+			<div class="container">
+				<div class="listLike">
+					<div class="box_listLike" v-if="snack">
+						<h2>котики такие котики</h2>
+						<p>Это приложение сделано что бы все увидели на сколько котики классные.</p>
+						<p>Каждый может зайти и посмотреть на сколько они "Лапульки"</p>
+						<p> Есле конечно не испугается</p>
+						<img src="/src/img/cat.png" alt="cat" class="cat">
+					</div>
+					<list-cats v-for="inf in selectedCat" :key="inf.id" :info_data="inf" @del_cat="visiblCardCat">
+					</list-cats>
+				</div>
+				<div class="boxСhoiceCats">
+					<div class="blockTitleCats">
+						<h2>Выбери лучшего котика</h2>
+						<box-cats :info="info">
+
+						</box-cats>
+					</div>
+					<div class="boxButtonCat">
+						<button v-if="isVisibleCat" @click="isVisible" class="button buttonLike__next"
+							type="button">Показать
+							котиков</button>
+						<div class="buttonLike" v-else="isVisibleCat">
+							<button @click="lick" class="button buttonLike__like" type="button">Мне нравится</button>
+							<button @click="xhr" class="button buttonLike__next" type="button">Следуещий
+								котик</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</main>
+	</div>
+</body>
+
+</html>
