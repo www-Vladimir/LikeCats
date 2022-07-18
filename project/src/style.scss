@@ -19,14 +19,22 @@ p {
 
 .container {
 	display: flex;
-	align-items: flex-start;
+	align-items: flex-end;
 	justify-content: space-between;
 	margin-top: 10px;
 	padding: 0 10px;
+	flex-wrap: wrap-reverse;
 }
 
 h2 {
 	text-align: center;
+}
+
+.loading {
+	background: transparent url("/src/img/loading-100.gif") center no-repeat;
+	height: 400px;
+	width: 400px;
+	background-size: cover;
 }
 
 header {
@@ -186,6 +194,7 @@ header {
 	max-height: 667px;
 	overflow: auto;
 	text-align: center;
+	min-width: 250px;
 }
 .boxСhoiceCats {
 	flex: 2;

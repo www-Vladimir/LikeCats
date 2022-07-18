@@ -47,63 +47,72 @@ window.onload = () => {
 	app = new Vue({
 		el: '#root',
 		data: {
-
-			searchValue: '',
 			isVisibleCat: true,
 			snack: true,
-			errorMessage: '',
-			basketGoodsItems: [],
 			url: "https://api.thecatapi.com/v1/images/search",
 			info: [{ url: require('/src/img/catO4kax.png'), id: '111', categories: [{ nameCat: 'Котик без имени:( ' }] }],
 			selectedCat: [],
+			tipper: false,
 		},
 		methods: {
-			xhr: function () {
-				this.info = "Requesting ...";
-				var rq = new XMLHttpRequest();
+			toggleimg: function () {
+				this.tipper = true
+				this.fetchImg();
+			},
 
-				rq.onreadystatechange = function (vm) {
-					if (this.readyState === XMLHttpRequest.DONE) {
-						if (this.status === 200) {
-							vm.info = JSON.parse(this.response);
-						} else {
-							vm.info = "Request Failed";
-						}
+			// xhr: function () {
+			// 	this.info = "Requesting ...";
+			// 	var rq = new XMLHttpRequest();
+
+			// 	rq.onreadystatechange = function (vm) {
+			// 		if (this.readyState === XMLHttpRequest.DONE) {
+			// 			if (this.status === 200) {
+			// 				vm.info = JSON.parse(this.response);
+			// 				console.log(vm.info)
+
+			// 			} else {
+			// 				vm.info = "Request Failed";
+			// 			}
+			// 		}
+			// 		console.log(vm.info)
+			// 	}.bind(rq, this);
+			// 	rq.open('GET', this.url);
+			// 	rq.setRequestHeader("x-api-key", "594bbe42-29d2-4378-93df-e4e8a3613f6d");
+			// 	rq.send();
+			// },
+			fetchImg() {
+				this.img = require('/src/img/catO4kax.png');
+				return fetch(this.url, {
+					headers: {
+						"x-api-key": "594bbe42-29d2-4378-93df-e4e8a3613f6d"
 					}
-				}.bind(rq, this);
-				rq.open('GET', this.url);
-				rq.setRequestHeader("x-api-key", "594bbe42-29d2-4378-93df-e4e8a3613f6d");
-				rq.send();
+				})
+					.then((res) => res.json()).then((data) => {
+						this.info = data;
+						this.tipper = false
+					});
 			},
 			isVisible() {
-				this.xhr()
+				this.toggleimg()
 				this.isVisibleCat = false
 			},
 			lick() {
 				if (this.info[0] !== "R") {
 					this.selectedCat.push(this.info[0])
-					this.xhr()
+					this.toggleimg()
 					this.snack = false
 				}
 			},
 			visiblCardCat(data) {
 				const index = this.selectedCat.findIndex(n => n.id === data);
 				if (index !== -1) {
+					console.log(index)
 					this.selectedCat.splice(index, 1);
+					if (index == 0) {
+						this.snack = true
+					}
 				}
 			},
-
 		},
-
-		// computed: {
-		// 	cat_image() {
-		// 		if (!this.info[0].url) {
-		// 			return
-		// 		}
-
-		// 		const fileName = require(this.info[0].url)
-		// 		return fileName // the module request
-		// 	},
-		// }
 	})
 }

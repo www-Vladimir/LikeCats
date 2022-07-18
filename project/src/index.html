@@ -31,8 +31,8 @@
 				<div class="boxСhoiceCats">
 					<div class="blockTitleCats">
 						<h2>Выбери лучшего котика</h2>
-						<box-cats :info="info">
-
+						<div class="loading" v-if="tipper"></div>
+						<box-cats :info="info" v-else="tipper">
 						</box-cats>
 					</div>
 					<div class="boxButtonCat">
@@ -41,7 +41,7 @@
 							котиков</button>
 						<div class="buttonLike" v-else="isVisibleCat">
 							<button @click="lick" class="button buttonLike__like" type="button">Мне нравится</button>
-							<button @click="xhr" class="button buttonLike__next" type="button">Следуещий
+							<button @click="toggleimg" class="button buttonLike__next" type="button">Следуещий
 								котик</button>
 						</div>
 					</div>
